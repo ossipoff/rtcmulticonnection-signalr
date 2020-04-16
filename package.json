@@ -2,12 +2,19 @@
   "name": "@ossisoft/rtcmulticonnection-signalr",
   "version": "1.0.0",
   "description": "SignalR socket for RTCMultiConnection",
+  "keywords": [
+    "rtcmulticonnection",
+    "signalr",
+    "webrtc"
+  ],
+  "author": "ossipoff",
+  "email": "info@ossisoft.dk",
+  "license": "MIT",
+  "repository": "github:ossipoff/rtcmulticonnection-signalr",
   "main": "RTCMultiConnectionSignalR.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "ossipoff",
-  "license": "MIT",
   "dependencies": {
     "@microsoft/signalr": "^3.1.3"
   },
