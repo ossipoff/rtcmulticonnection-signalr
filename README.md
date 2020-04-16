@@ -16,3 +16,11 @@ rtcmConnection.signalrHubURL = 'https://myserver/rtchub' // Required
 rtcmConnection.signalrHubMethodName = 'Send' // Optional, default is Send
 rtcmConnection.setCustomSocketHandler(RTCMultiConnectionSignalR)
 ```
+
+## Development
+```
+git clone https://github.com/ossipoff/rtcmulticonnection-signalr.git
+cd rtcmulticonnection-signalr
+npm install
+npm run build
+```
