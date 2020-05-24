@@ -169,10 +169,16 @@ function RTCMultiConnectionSignalR (connection, connectCallback) {
 
   const onCallbacks = {}
 
+  let joining = false
+
   connection.socket = {
     emit (eventName, data, emitCallback) {
       if (eventName === 'changed-uuid') return
       if (data.message && data.message.shiftedModerationControl) return
+
+      if (eventName === 'join-room') {
+        joining = true
+      }
 
       hubConnection.invoke(connection.signalrHubMethodName || 'Send', connection.channel, JSON.stringify({
         eventName: eventName,
@@ -208,20 +214,29 @@ function RTCMultiConnectionSignalR (connection, connectCallback) {
 
   hubConnection.on(connection.channel, (message) => {
     const messageObject = JSON.parse(message)
-    switch (messageObject.eventName) {
-      case connection.socketMessageEvent:
-        onMessageEvent(messageObject.data)
-        break
-      case 'presence':
-        if (messageObject.data.userid === connection.userid) return
-        connection.onUserStatusChanged({
-          userid: messageObject.data.userid,
-          status: messageObject.data.isOnline === true ? 'online' : 'offline',
-          extra: connection.peers[messageObject.data.userid] ? connection.peers[messageObject.data.userid].extra : {}
-        })
-        break
-      default:
-        break
+
+    if (messageObject.eventName === connection.socketMessageEvent && messageObject.data && messageObject.data.message && messageObject.data.message.userLeft) {
+      joining = false
+    }
+
+    // only process messages if participant is joining or already joined
+    // otherwise it results in ICE candidate errors
+    if (joining) {
+      switch (messageObject.eventName) {
+        case connection.socketMessageEvent:
+          onMessageEvent(messageObject.data)
+          break
+        case 'presence':
+          if (messageObject.data.userid === connection.userid) return
+          connection.onUserStatusChanged({
+            userid: messageObject.data.userid,
+            status: messageObject.data.isOnline === true ? 'online' : 'offline',
+            extra: connection.peers[messageObject.data.userid] ? connection.peers[messageObject.data.userid].extra : {}
+          })
+          break
+        default:
+          break
+      }
     }
     if (onCallbacks[messageObject.eventName]) {
       onCallbacks[messageObject.eventName].forEach(cb => {
