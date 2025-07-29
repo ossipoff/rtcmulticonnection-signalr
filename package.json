@@ -17,14 +17,14 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@microsoft/signalr": "^3.1.3"
+    "@microsoft/signalr": "^8.0.7"
   },
   "peerDependencies": {
-    "rtcmulticonnection": "^3.7.0"
+    "rtcmulticonnection": "^3.7.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.5"
+    "@babel/cli": "^7.28.0",
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0"
   }
 }
