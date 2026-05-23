@@ -10,10 +10,13 @@
   "author": "ossipoff",
   "email": "info@ossisoft.dk",
   "license": "MIT",
-  "repository": "github:ossipoff/rtcmulticonnection-signalr",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ossipoff/rtcmulticonnection-signalr.git"
+  },
   "main": "./dist/RTCMultiConnectionSignalR.js",
   "scripts": {
-    "build": "./node_modules/.bin/babel RTCMultiConnectionSignalR.js --out-dir dist",
+    "build": "babel RTCMultiConnectionSignalR.js --out-dir dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
