@@ -17,7 +17,7 @@
   "main": "./dist/RTCMultiConnectionSignalR.js",
   "scripts": {
     "build": "babel RTCMultiConnectionSignalR.js --out-dir dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --config jest.config.cjs"
   },
   "dependencies": {
     "@microsoft/signalr": "^8.0.17"
@@ -28,6 +28,8 @@
   "devDependencies": {
     "@babel/cli": "^7.28.6",
     "@babel/core": "^7.29.0",
-    "@babel/preset-env": "^7.29.5"
+    "@babel/preset-env": "^7.29.7",
+    "babel-jest": "^30.4.1",
+    "jest": "^30.4.2"
   }
 }

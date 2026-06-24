@@ -195,9 +195,9 @@ function RTCMultiConnectionSignalR (connection, connectCallback) {
     },
     off (eventName, onCallback) {
       if (onCallbacks[eventName]) {
-        const idx = onCallbacks.findIndex(cb => cb === onCallback)
+        const idx = onCallbacks[eventName].findIndex(cb => cb === onCallback)
         if (idx > -1) {
-          onCallbacks.splice(idx, 1)
+          onCallbacks[eventName].splice(idx, 1)
         }
       }
     },
@@ -215,8 +215,9 @@ function RTCMultiConnectionSignalR (connection, connectCallback) {
   hubConnection.on(connection.channel, (message) => {
     const messageObject = JSON.parse(message)
 
+    let wasUserLeft = false
     if (messageObject.eventName === connection.socketMessageEvent && messageObject.data && messageObject.data.message && messageObject.data.message.userLeft) {
-      joining = false
+      wasUserLeft = true
     }
 
     // only process messages if participant is joining or already joined
@@ -237,6 +238,10 @@ function RTCMultiConnectionSignalR (connection, connectCallback) {
         default:
           break
       }
+    }
+    // Reset joining only after processing messages
+    if (wasUserLeft) {
+      joining = false
     }
     if (onCallbacks[messageObject.eventName]) {
       onCallbacks[messageObject.eventName].forEach(cb => {
